@@ -114,7 +114,7 @@
 
 ---
 
-## 🚀 How to Run the Project
+## How to Run the Project
 
 1. Clone or unzip the project.
 2. Configure `.env` with your database credentials.
@@ -133,7 +133,7 @@
 
 ---
 
-## 🧭 Workflow Summary
+## Workflow Summary
 
 | Screen        | Functionality                                                                 |
 |---------------|------------------------------------------------------------------------------|
