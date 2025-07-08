@@ -21,6 +21,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('countries', CountryAdminController::class);
     Route::resource('provinces', ProvinceAdminController::class);
     Route::resource('cities', CityAdminController::class);
+    
+    
+
 });
 
 

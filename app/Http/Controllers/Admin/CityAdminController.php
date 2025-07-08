@@ -26,9 +26,16 @@ class CityAdminController extends Controller
         $request->validate([
             'name' => 'required',
             'province_id' => 'required|exists:provinces,id',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
         ]);
 
-        City::create($request->all());
+        City::create([
+            'name' => $request->name,
+            'province_id' => $request->province_id,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+        ]);
 
         return redirect()->route('admin.cities.index')->with('success', 'City created successfully.');
     }
@@ -44,9 +51,16 @@ class CityAdminController extends Controller
         $request->validate([
             'name' => 'required',
             'province_id' => 'required|exists:provinces,id',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
         ]);
 
-        $city->update($request->all());
+        $city->update([
+            'name' => $request->name,
+            'province_id' => $request->province_id,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+        ]);
 
         return redirect()->route('admin.cities.index')->with('success', 'City updated successfully.');
     }

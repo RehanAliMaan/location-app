@@ -6,6 +6,7 @@
 
     <form action="{{ route('admin.cities.store') }}" method="POST">
         @csrf
+
         <label>Name:</label>
         <input type="text" name="name" required>
 
@@ -18,6 +19,12 @@
                 </option>
             @endforeach
         </select>
+
+        <label>Latitude:</label>
+        <input type="number" step="0.0000001" name="latitude" placeholder="e.g. 31.5497">
+
+        <label>Longitude:</label>
+        <input type="number" step="0.0000001" name="longitude" placeholder="e.g. 74.3436">
 
         <button type="submit">Create</button>
     </form>

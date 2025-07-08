@@ -20,6 +20,12 @@
             @endforeach
         </select>
 
+        <label>Latitude:</label>
+        <input type="number" step="0.0000001" name="latitude" value="{{ $city->latitude }}" placeholder="e.g. 31.5497">
+
+        <label>Longitude:</label>
+        <input type="number" step="0.0000001" name="longitude" value="{{ $city->longitude }}" placeholder="e.g. 74.3436">
+
         <button type="submit">Update</button>
     </form>
 </div>

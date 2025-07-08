@@ -7,6 +7,7 @@ use App\Models\Country;
 use App\Models\Province;
 use Illuminate\Support\Facades\Http;
 
+
 class ExternalLocationController extends Controller
 {
     /* ----------------------------------------
@@ -93,4 +94,38 @@ class ExternalLocationController extends Controller
 
         return response()->json($all);
     }
+ 
+
+
+    public function areas($city)
+    {
+        $username = env('GEONAMES_USERNAME', 'astafa'); // Replace or use .env
+        $response = Http::get("http://api.geonames.org/searchJSON", [
+            'q'       => $city,
+            'maxRows' => 50,
+            'username'=> $username,
+            'featureClass' => 'P', // populated places
+            'style' => 'FULL'
+        ]);
+
+        if (!$response->successful()) {
+            return response()->json(['error' => 'Failed to fetch areas'], 500);
+        }
+
+        $data = $response->json();
+
+        $areas = collect($data['geonames'] ?? [])->map(function ($item) {
+            return [
+                'name' => $item['name'] ?? '',
+                'lat' => $item['lat'] ?? null,
+                'lng' => $item['lng'] ?? null,
+                'geonameId' => $item['geonameId'] ?? null
+            ];
+        });
+
+        return response()->json($areas);
+    }
+
+
+
 }
