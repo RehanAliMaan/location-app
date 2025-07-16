@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: astafa@1234
+      MYSQL_DATABASE: docker_db
+      MYSQL_USER: astafa
+      MYSQL_PASSWORD: astafa@1234
+    networks:
+      - app-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_USER: astafa
+      PMA_PASSWORD: astafa@1234
+    ports:
+      - 8080:80
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
