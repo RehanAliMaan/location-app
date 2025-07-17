@@ -1,27 +1,35 @@
 version: '3.8'
 
 services:
-  db:
+  frontend:
+    image: location-app:v2.0
+    networks:
+      - location-network
+    ports:
+      - 8181:8181
+  sql-db:
     image: mysql:5.7
     environment:
-      MYSQL_ROOT_PASSWORD: astafa@1234
       MYSQL_DATABASE: docker_db
-      MYSQL_USER: astafa
-      MYSQL_PASSWORD: astafa@1234
+      MYSQL_ROOT_PASSWORD: astafa@1234
+    
     networks:
-      - app-network
+      - location-network
+    volumes:
+     - location-data:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
-      PMA_HOST: db
-      PMA_USER: astafa
+      PMA_HOST: sql-db
+      PMA_USER: root
       PMA_PASSWORD: astafa@1234
     ports:
       - 8080:80
     networks:
-      - app-network
+      - location-network
 
 networks:
-  app-network:
-    driver: bridge
+  location-network:
+volumes:
+  location-data:
