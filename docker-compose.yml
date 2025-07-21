@@ -1,23 +1,51 @@
 version: '3.8'
 
 services:
-  frontend:
-    image: location-app:v2.0
+  # PHP + Laravel (using your Dockerfile)
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
     networks:
       - location-network
+
+  # NGINX to serve Laravel via PHP-FPM
+  nginx:
+    image: nginx:alpine
     ports:
-      - 8181:8181
+      - 8080:80
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - .:/app
+    depends_on:
+      - php
+    networks:
+      - location-network
+  apache:
+    build:
+      context: .
+      dockerfile: Dockerfile.apache  # Apache version
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 8082:80   # Apache on port 8082
+    networks:
+      - location-network
+
+  # MySQL Database
   sql-db:
     image: mysql:5.7
     environment:
       MYSQL_DATABASE: docker_db
       MYSQL_ROOT_PASSWORD: astafa@1234
-    
+    volumes:
+      - location-data:/var/lib/mysql
     networks:
       - location-network
-    volumes:
-     - location-data:/var/lib/mysql
 
+  # phpMyAdmin
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
@@ -25,11 +53,12 @@ services:
       PMA_USER: root
       PMA_PASSWORD: astafa@1234
     ports:
-      - 8080:80
+      - 8081:80
     networks:
       - location-network
 
 networks:
   location-network:
+
 volumes:
   location-data:

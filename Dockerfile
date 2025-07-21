@@ -26,4 +26,5 @@ RUN chown -R www-data:www-data /app/storage /app/bootstrap/cache
 # Expose port
 EXPOSE 8181
 # Start the Laravel application
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8181"]
+CMD ["php-fpm"]
+
