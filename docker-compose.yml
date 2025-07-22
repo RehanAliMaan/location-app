@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - .:/app
+      - laravel-data:/app
     networks:
       - location-network
 
@@ -18,7 +18,7 @@ services:
       - 8080:80
     volumes:
       - ./nginx:/etc/nginx/conf.d
-      - .:/app
+      - laravel-data:/app
     depends_on:
       - php
     networks:
@@ -28,7 +28,7 @@ services:
       context: .
       dockerfile: Dockerfile.apache  # Apache version
     volumes:
-      - .:/var/www/html
+      - laravel-data:/var/www/html
     ports:
       - 8082:80   # Apache on port 8082
     networks:
@@ -62,3 +62,4 @@ networks:
 
 volumes:
   location-data:
+  laravel-data:
